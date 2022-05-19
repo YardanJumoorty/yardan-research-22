@@ -1,17 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Wed May 18 20:47:54 2022
-
-@author: yarda
-"""
-
-# -*- coding: utf-8 -*-
-"""
-Created on Mon May 16 00:35:07 2022
-
-@author: yardan
-"""
-
 import numpy as np
 import sympy as sp
 import matplotlib.pyplot as plt
@@ -100,3 +86,15 @@ def OTOC(t):
     product = (dagger(commutator(time_ev_O(t),O))) @ commutator(time_ev_O(t),O)
     trace = np.trace(product)
     return ((S**2)*trace)/(2*S+1)
+
+
+
+#plotting OTOC against t
+t = np.linspace(1, 10,50)
+y = []
+for k in t:
+    y.append(OTOC(k))
+
+plt.semilogy(t,y, 'rx')
+plt.ylabel("C(t)")
+plt.xlabel("t")
