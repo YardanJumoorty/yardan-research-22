@@ -1,3 +1,17 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Wed May 18 20:47:54 2022
+
+@author: yarda
+"""
+
+# -*- coding: utf-8 -*-
+"""
+Created on Mon May 16 00:35:07 2022
+
+@author: yardan
+"""
+
 import numpy as np
 import sympy as sp
 import matplotlib.pyplot as plt
@@ -57,7 +71,7 @@ O = z_hat
 ####################Diagonalizing Hamiltonian#######################
 
 
-H = x_hat + z_hat@(z_hat)#defining hamiltonian
+H = x_hat + 2*z_hat@(z_hat)#defining hamiltonian
 
 #defining dagger function (complex conjugate transpose)
 def dagger(a):
@@ -72,7 +86,7 @@ P_inverse = dagger(P)
 #defining time_evolved operator
 
 def e_iHt(i,t):
-    exponentiated_diagonal= np.exp((complex(0,i)*t*eigenvalues_H) )
+    exponentiated_diagonal= np.exp((complex(0,i)*t*eigenvalues_H*S) )
     exponentiated_D= np.diag(exponentiated_diagonal)
     return P @ exponentiated_D @ P_inverse
 
