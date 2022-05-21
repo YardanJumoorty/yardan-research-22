@@ -7,7 +7,7 @@ Created on Thu May 19 21:18:56 2022
 
 import numpy as np
 import matplotlib.pyplot as plt
-
+from scipy.optimize import curve_fit
 
 
 #Defining Spin quantum number S
@@ -113,12 +113,39 @@ def OTOC(t):
 
 
 #plotting OTOC against t
-t = np.linspace(0.5, 10,50)
+t = np.linspace(0.5, 15,50)
 y = []
 for k in t:
     y.append(OTOC(k))
+
 
 plt.semilogy(t,y, 'rx')
 plt.ylabel("C(t)")
 plt.xlabel("t")
 plt.title('H=0.875x^2 + 0.125y^2')
+
+
+#finding best fit for straight section
+x_data = np.linspace(3,10,25)
+
+y_data = []
+for k in x_data:
+    y_data.append(OTOC(k))
+
+
+    
+def model_function(t,m,c):
+    return c*10**(m*t)
+
+popt,pcov = curve_fit(model_function,x_data,y_data,p0=[0.3,1])
+
+m=popt[0]
+c = popt[1]
+
+h = []
+for k in x_data:
+    h.append(model_function(k, m, c))
+    
+plt.semilogy(x_data,h)
+
+print("gradient of line is", m)
