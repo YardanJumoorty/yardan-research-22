@@ -1,11 +1,23 @@
-import numpy as np
-import sympy as sp
-import matplotlib.pyplot as plt
+"""
+Created on Wed May 18 20:47:54 2022
 
+@author: yarda
+"""
+
+# -*- coding: utf-8 -*-
+"""
+Created on Mon May 16 00:35:07 2022
+
+@author: yardan
+"""
+
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy.optimize import curve_fit
 
 
 #Defining Spin quantum number S
-S = 25
+S = 250 
 
 
 
@@ -98,3 +110,29 @@ for k in t:
 plt.semilogy(t,y, 'rx')
 plt.ylabel("C(t)")
 plt.xlabel("t")
+
+x_data = np.linspace(1,4,25)
+
+y_data = []
+for k in x_data:
+    y_data.append(OTOC(k))
+
+
+    
+def model_function(t,m,c):
+    return m*t+c
+
+popt,pcov = curve_fit(model_function,x_data,np.log10(y_data))
+
+m=popt[0]
+c = popt[1]
+
+h = []
+for k in x_data:
+    h.append(model_function(k, m, c))
+g=[]
+for c in h: 
+    g.append(10**c)
+plt.plot(x_data,g)
+
+print("gradient of line is", m)
