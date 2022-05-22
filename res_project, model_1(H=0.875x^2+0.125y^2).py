@@ -126,7 +126,7 @@ plt.title('H=0.875x^2 + 0.125y^2')
 
 
 #finding best fit for straight section
-x_data = np.linspace(3,10,25)
+x_data = np.linspace(4,10,25)
 
 y_data = []
 for k in x_data:
@@ -135,9 +135,9 @@ for k in x_data:
 
     
 def model_function(t,m,c):
-    return c*10**(m*t)
+    return m*t+c
 
-popt,pcov = curve_fit(model_function,x_data,y_data,p0=[0.3,1])
+popt,pcov = curve_fit(model_function,x_data,np.log10(y_data))
 
 m=popt[0]
 c = popt[1]
@@ -145,7 +145,9 @@ c = popt[1]
 h = []
 for k in x_data:
     h.append(model_function(k, m, c))
-    
-plt.semilogy(x_data,h)
+g=[]
+for c in h: 
+    g.append(10**c)
+plt.plot(x_data,g)
 
 print("gradient of line is", m)
