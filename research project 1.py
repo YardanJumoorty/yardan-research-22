@@ -122,7 +122,7 @@ for k in x_data:
 def model_function(t,m,c):
     return m*t+c
 
-popt,pcov = curve_fit(model_function,x_data,np.log10(y_data))
+popt,pcov = curve_fit(model_function,x_data,np.log(y_data))
 
 m=popt[0]
 c = popt[1]
@@ -132,7 +132,7 @@ for k in x_data:
     h.append(model_function(k, m, c))
 g=[]
 for c in h: 
-    g.append(10**c)
+    g.append(np.e**c)
 plt.plot(x_data,g)
 
 print("gradient of line is", m)
